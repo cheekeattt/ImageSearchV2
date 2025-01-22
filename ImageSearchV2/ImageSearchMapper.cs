@@ -2,6 +2,7 @@
 using ImageSearchV2.Constants;
 using ImageSearchV2.Models.ImageSearch.Response;
 using ImageSearchV2.Models.PixaBay.Response;
+using ImageSearchV2.Models.StoryBlocks.Response;
 using ImageSearchV2.Models.Unsplash.Response;
 
 namespace ImageSearchV2
@@ -35,6 +36,14 @@ namespace ImageSearchV2
             CreateMap<PixaBayResponse, List<ImageSearchResponse>>()
                 .ConvertUsing((src, _, context) =>
                     src.Hits.Select(hit => context.Mapper.Map<ImageSearchResponse>(hit)).ToList());
+
+            CreateMap<StoryblocksResult, ImageSearchResponse>()
+                        .ForMember(dest => dest.ImageID, opt => opt.MapFrom(src => src.Id.ToString()))
+                        .ForMember(dest => dest.Thumbnails, opt => opt.MapFrom(src => src.ThumbnailUrl))
+                        .ForMember(dest => dest.Preview, opt => opt.MapFrom(src => src.PreviewUrl))
+                        .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+                        .ForMember(dest => dest.Source, opt => opt.MapFrom(_ => nameof(ImageSource.Storyblocks)))
+                        .ForMember(dest => dest.Tags, opt => opt.Ignore()); // Tags are not present in Storyblocks API
         }
     }
 

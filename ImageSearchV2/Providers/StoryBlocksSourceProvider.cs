@@ -30,18 +30,16 @@ namespace ImageSearchV2.Providers
 
         public async Task<List<ImageSearchResponse>> SearchImage(string keyword)
         {
-            // Generate the expiration time and HMAC
             var expires = StoryblocksHmacHelper.GetExpirationTime();
-            var hmac = StoryblocksHmacHelper.GenerateHmac(_privateKey, "/api/v2/videos/search", expires);
+            var hmac = StoryblocksHmacHelper.GenerateHmac(_privateKey, expires, "/api/v2/images/search");
 
-            // Build the URL with HMAC and expiration time
             var url = BuildUrl(keyword, hmac, expires);
 
-            // Send the request to Storyblocks API and map the response to the desired type
             var storyBlocksResp = await HttpRequestHelper.GetAsync<StoryBlocksResponse>(url);
-            if(storyBlocksResp != null)
+
+            if (storyBlocksResp?.Results != null)
             {
-                return _mapper.Map<List<ImageSearchResponse>>(storyBlocksResp);
+                return _mapper.Map<List<ImageSearchResponse>>(storyBlocksResp.Results);
             }
             return new List<ImageSearchResponse>();
         }

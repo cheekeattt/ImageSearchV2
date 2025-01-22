@@ -33,23 +33,9 @@ namespace ImageSearchV2.Services
 
             await Task.WhenAll(unsplashTask, pixaBayTask, storyBlocksTask);
 
-            var unsplashResults = unsplashTask.Result;
-            if (unsplashResults.Count > 0)
-            {
-                result.AddRange(unsplashResults);
-            }
-
-            var pixaBayResults = pixaBayTask.Result;
-            if (pixaBayResults.Count > 0)
-            {
-                result.AddRange(pixaBayResults);
-            }
-
-            var storyBlockResults = storyBlocksTask.Result;
-            if (storyBlockResults.Count > 0)
-            {
-                result.AddRange(storyBlockResults);
-            }
+            result.AddRange(unsplashTask.Result);
+            result.AddRange(pixaBayTask.Result);
+            result.AddRange(storyBlocksTask.Result);
 
             return result;
         }

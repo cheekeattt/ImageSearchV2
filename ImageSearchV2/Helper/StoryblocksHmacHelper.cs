@@ -12,20 +12,19 @@ namespace ImageSearchV2.Helper
         }
 
         // Method to generate the HMAC using the private key, resource, and expiration time
-        public static string GenerateHmac(string privateKey, string resource, string expires)
+        public static string GenerateHmac(string privateKey, string expires, string resource)
         {
-            // Concatenate the private key with the expiration time
-            string key = privateKey + expires;
+            // Combine the private key and expires timestamp
+            var key = Encoding.UTF8.GetBytes(privateKey + expires);
 
-            // Create the HMAC using SHA-256
-            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key)))
+            // Convert the resource to a byte array
+            var resourceBytes = Encoding.UTF8.GetBytes(resource);
+
+            // Create the HMAC-SHA256 hash
+            using (var hmac = new HMACSHA256(key))
             {
-                // Compute the hash of the resource (API endpoint)
-                byte[] data = Encoding.UTF8.GetBytes(resource);
-                byte[] hash = hmac.ComputeHash(data);
-
-                // Return the hash as a hexadecimal string
-                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+                var hashBytes = hmac.ComputeHash(resourceBytes);
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
     }
