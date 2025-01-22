@@ -1,10 +1,17 @@
-﻿namespace ImageSearchV2.Models.Unsplash.Response
+﻿using ImageSearchV2.Models.ImageSearch.Response;
+
+namespace ImageSearchV2.Models.Unsplash.Response
 {
     public class UnsplashResponse
     {
         public int Total { get; set; }
         public int TotalPages { get; set; }
         public List<Photo> Results { get; set; }
+
+        public ImageSearchResponse ToImageSearch()
+        {
+            return new ImageSearchResponse();
+        }
     }
 
     public class User

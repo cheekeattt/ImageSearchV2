@@ -1,20 +1,29 @@
 using ImageSearchV2.Interfaces;
 using ImageSearchV2.Query;
-using ImageSearchV2.Services;
+using ImageSearchV2.Providers;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using ImageSearchV2.Services;
+using ImageSearchV2;
+using ImageSearch.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUnsplashSourceProvider, UnsplashSourceProvider>();
+builder.Services.AddScoped<IStoryBlocksSourceProvider, StoryBlocksSourceProvider>();
+builder.Services.AddScoped<IPixaBaySourceProvider, PixaBaySourceProvider>();
+builder.Services.AddScoped<IImageSearchService, ImageSearchService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddGraphQLServer()    
+builder.Services.AddGraphQLServer()
+    .AddQueryType<ImageSearchQuery>()
     .AddProjections()
-    //.AddQueryType<QueryBase>() // Add the Query class
     .AddFiltering()
     .AddSorting();
+
+builder.Services.AddAutoMapper(typeof(ImageSearchMapper));
+
 
 var app = builder.Build();
 
