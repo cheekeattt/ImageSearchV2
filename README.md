@@ -116,10 +116,7 @@ query {
     thumbnails
   }
 }
-Response
-json
-Copy
-Edit
+
 {
   "data": {
     "searchImages": [
