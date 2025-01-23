@@ -101,6 +101,46 @@ Update the `appsettings.json` file with your API keys and other configurations:
 ]
 ```
 
+### GraphQL Endpoint
+**POST** `/graphql`
+
+GraphQL allows for flexible queries. You can define your own search parameters and structure for the response.
+
+#### Example Query
+```graphql
+query {
+  searchImages(keyword: "nature") {
+    imageID
+    title
+    source
+    thumbnails
+  }
+}
+Response
+json
+Copy
+Edit
+{
+  "data": {
+    "searchImages": [
+      {
+        "imageID": "<image-id>",
+        "title": "<image-title>",
+        "source": "<source-provider>",
+        "thumbnails": "<thumbnail-url>"
+      }
+    ]
+  }
+}
+```
+
+### Swagger UI
+Swagger UI is integrated into the project to explore and test the API endpoints.
+
+1. Navigate to `http://localhost:5018/swagger` (or the appropriate URL for your environment).
+2. Explore the available API endpoints.
+3. Test the API directly from the Swagger interface.
+
 ## Project Structure
 ```
 ImageSearchV2/
