@@ -149,14 +149,6 @@ ImageSearchV2/
 ├── Helper/              # Utility classes
 └── appsettings.json     # Configuration file
 ```
-
-## Contributing
-Contributions are welcome! To contribute:
-1. Fork the repository.
-2. Create a new feature branch.
-3. Commit your changes and push them to your fork.
-4. Open a pull request.
-
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
